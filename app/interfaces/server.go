@@ -42,6 +42,8 @@ func (s *Server) Route() {
 	tx := transaction.NewTxRepository(s.db)
 
 	userRepository := infrastructure.NewUserRepository(s.db)
+	userUsecase := usecase.NewUserUsecase(userRepository, *tx)
+	userHandler := handler.NewUserHandler(*userUsecase)
 
 	attendanceRepository := infrastructure.NewAttendanceRepository(s.db)
 	attendanceUsecase := usecase.NewAttendanceUsecase(attendanceRepository, userRepository, *tx)
@@ -53,5 +55,7 @@ func (s *Server) Route() {
 		})
 	})
 
-	s.Router.POST("/attendance/", attendanceHandler.RegisterAttendance)
+	s.Router.POST("/attendance", attendanceHandler.RegisterAttendance)
+
+	s.Router.POST("/user", userHandler.CreateUser)
 }
