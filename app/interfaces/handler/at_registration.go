@@ -30,5 +30,7 @@ func (ah *AttendanceHandler) RegisterAttendance(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
 		})
+
+		return
 	}
 }
