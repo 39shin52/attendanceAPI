@@ -36,3 +36,14 @@ func convertUser(row *sql.Row) (*entity.User, error) {
 
 	return user, nil
 }
+
+func (ur *userRepositoryImpl) InsertUser(ctx context.Context, user *entity.User) (*entity.User, error) {
+	query := `insert into user(id, name, affiliation) values(?, ?, ?)`
+
+	_, err := ur.db.ExecContext(ctx, query, user.ID, user.Name, user.Affiliation)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

@@ -8,4 +8,5 @@ import (
 
 type UserRepository interface {
 	SelectUserByID(context.Context, string) (*entity.User, error)
+	InsertUser(context.Context, *entity.User) (*entity.User, error)
 }
